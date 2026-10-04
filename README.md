@@ -31,9 +31,10 @@ the repeatable workflow.
 
 CodeWorker maintains a local development-control system in `.dev/`:
 
-1. **Plan from the result** — clarify what the completed project must do, how
-   people or systems use it, expected outputs, boundaries, and constraints;
-   then propose the architecture, packages, releases, roadmap, and modules.
+1. **Plan from the result** — lead a brainstorming conversation with the human
+   developer from final result, user/system use, and expected outputs through
+   requirements, modules, units, and test evidence; then propose the
+   architecture, packages, releases, and roadmap for confirmation.
 2. **Plan and specify** — maintain the project plan, solution architecture,
    release plan, roadmap, and independently testable module requirements.
 3. **Implement** — build only the approved, traceable behavior.
@@ -61,9 +62,10 @@ With the local CodeWorker control package available to your coding agent, run:
 Plan project
 ```
 
-The planning workflow starts with the desired result, works backward into
-requirements, proposes a delivery structure for confirmation, creates the local
-`.dev/` control records and module requirement stubs, and generates
+The planning workflow starts with a developer-led conversation about the desired
+result, works backward into requirements, modules, units, and test evidence,
+then proposes a delivery structure for confirmation. Only then does it create
+the local `.dev/` control records and module requirement stubs, and generate
 `.dev/INDEX.md`. Start every later workflow from that index.
 
 `.dev/` is intentionally local to development and excluded from this GitHub
