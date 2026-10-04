@@ -6,7 +6,8 @@ repository by default.
 
 ## Operating model
 
-1. Start at [.dev/INDEX.md](.dev/INDEX.md), then read the relevant plan, requirements,
+1. For a new target, use `initialize-project` before implementation. Then start
+   at [.dev/INDEX.md](.dev/INDEX.md), and read the relevant plan, requirements,
    skill, and QA.
 2. Read `project_use` in `.dev/docs/project/plan.md`: an external project must maintain
    its root `README.md` through `maintain-readme`; an internal project does not
@@ -33,6 +34,7 @@ repository by default.
 8. Regenerate `.dev/INDEX.md` through `maintain-index`; never use an index to
    manufacture a passing status.
 
-The lifecycle is Plan → Requirements → Design → Implement → Validate → Deploy.
+The lifecycle is Initialize → Plan → Requirements → Design → Implement →
+Validate → Deploy.
 Core skills maintain this operating system; external skills are added only
 when a target product needs a user-facing workflow.
