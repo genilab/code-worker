@@ -31,8 +31,9 @@ the repeatable workflow.
 
 CodeWorker maintains a local development-control system in `.dev/`:
 
-1. **Initialize** — clarify the project, its users, objectives, boundaries,
-   constraints, architecture concerns, roadmap, and initial modules.
+1. **Plan from the result** — clarify what the completed project must do, how
+   people or systems use it, expected outputs, boundaries, and constraints;
+   then propose the architecture, packages, releases, roadmap, and modules.
 2. **Plan and specify** — maintain the project plan, solution architecture,
    release plan, roadmap, and independently testable module requirements.
 3. **Implement** — build only the approved, traceable behavior.
@@ -57,12 +58,13 @@ cd project-x
 With the local CodeWorker control package available to your coding agent, run:
 
 ```text
-Initialize project
+Plan project
 ```
 
-The kickoff workflow creates the local `.dev/` control records, guides the
-project-definition conversation, creates initial module requirement records,
-and generates `.dev/INDEX.md`. Start every later workflow from that index.
+The planning workflow starts with the desired result, works backward into
+requirements, proposes a delivery structure for confirmation, creates the local
+`.dev/` control records and module requirement stubs, and generates
+`.dev/INDEX.md`. Start every later workflow from that index.
 
 `.dev/` is intentionally local to development and excluded from this GitHub
 template. The GitHub repository contains the reusable codebase baseline;

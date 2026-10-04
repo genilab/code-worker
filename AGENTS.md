@@ -6,7 +6,7 @@ repository by default.
 
 ## Operating model
 
-1. For a new target, use `initialize-project` before implementation. Then start
+1. For a new target, use `project-planning` before implementation. Then start
    at [.dev/INDEX.md](.dev/INDEX.md), and read the relevant plan, requirements,
    skill, and QA.
 2. Read `project_use` in `.dev/docs/project/plan.md`: an external project must maintain
