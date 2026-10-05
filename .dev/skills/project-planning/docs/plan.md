@@ -29,7 +29,7 @@ confirmation before creating local control records or starting operations.
 
 ## Code Requirements
 
-- It must reject a missing control source, a target that already has `.dev/`, an empty result, or no modules.
+- It must reject a missing control source, an unrelated target `.dev/`, an empty result, or no modules.
 - It must create target project identity, plan, architecture, release, roadmap, project QA, and one requirement stub for every declared module.
-- It must preserve target source code and Git configuration while adding `.dev/` to the target ignore rules and creating only the local development-control package.
+- It must preserve target source code and Git configuration while adding `.dev/` to the target ignore rules and untracking a copied CodeWorker master `.dev/` package without deleting its local files.
 - It must have executable test units for input validation and generated control records.

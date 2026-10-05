@@ -34,6 +34,15 @@ class ProjectPlanningTest(unittest.TestCase):
             with self.assertRaises(MODULE.InitializationError):
                 MODULE.validate(MODULE.ProjectInput("Demo", "Build a demo", "external", (), "Demo"), target, Path("/source"))
 
+    def test_rejects_an_unrelated_control_directory(self) -> None:
+        """Protect a target's existing non-CodeWorker control records from replacement."""
+        with tempfile.TemporaryDirectory() as temporary:
+            target = Path(temporary)
+            (target / ".dev").mkdir()
+            project = MODULE.ProjectInput("Demo", "Build a demo", "external", ("core",), "Demo")
+            with self.assertRaises(MODULE.InitializationError):
+                MODULE.validate(project, target, Path("/source"))
+
     def test_renders_question_backed_module_record(self) -> None:
         """Keep unknown module behavior explicit instead of fabricating requirements."""
         record = MODULE.requirements("runtime-core")

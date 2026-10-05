@@ -30,7 +30,7 @@ is an approved local project plan and navigable `.dev/` baseline. User activatio
 
 - Project planning must establish the result and requirements before product implementation. It must not write product source code, mark QA passed, publish a release, or silently configure GitHub.
 - Keep CodeWorker's master `.dev/` package versioned with CodeWorker. The bootstrap must add `.dev/` to each target project's ignore rules so target control records remain local. Indexes are derived navigation, not evidence.
-- The planning code must refuse to overwrite an existing target `.dev/` directory or use its own project as a target. Non-goals include implementation, release publication, and retrospective QA.
+- The planning code must refuse an unrelated target `.dev/` directory or use its own project as a target. When a target was cloned from CodeWorker, it must retain the master `.dev/` files locally while removing them from that target's Git index. Non-goals include implementation, release publication, and retrospective QA.
 - The human developer owns product decisions; the agent must ask, organize, challenge ambiguity, and propose options, but must not infer unconfirmed requirements or begin operational work before confirmation.
 
 ## Dependencies

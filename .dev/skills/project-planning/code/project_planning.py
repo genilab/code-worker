@@ -51,8 +51,9 @@ def validate(project: ProjectInput, target: Path, source: Path) -> None:
         raise InitializationError(f"target directory does not exist: {target}")
     if target.resolve() == source.resolve():
         raise InitializationError("the CodeWorker source cannot initialize itself")
-    if (target / ".dev").exists():
-        raise InitializationError(f"target already has a control directory: {target / '.dev'}")
+    existing = target / ".dev"
+    if existing.exists() and not (existing / "skills" / "maintain-index" / "code" / "maintain_index.py").is_file():
+        raise InitializationError(f"target has an unrelated control directory: {existing}")
     if not (source / ".dev" / "skills" / "maintain-index" / "code" / "maintain_index.py").is_file():
         raise InitializationError(f"control source is incomplete: {source}")
 
@@ -84,12 +85,27 @@ def ignore_target_control_directory(target: Path) -> None:
         ignore.write_text("\n".join([*lines, ".dev/"]).lstrip("\n") + "\n", encoding="utf-8")
 
 
+def untrack_target_control_directory(target: Path) -> None:
+    """Remove a copied master .dev package from a target Git index without deleting its files."""
+    repository = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"], cwd=target, capture_output=True, text=True, check=False)
+    if repository.returncode:
+        return
+    tracked = subprocess.run(["git", "ls-files", "--error-unmatch", ".dev"], cwd=target, capture_output=True, text=True, check=False)
+    if not tracked.returncode:
+        removed = subprocess.run(["git", "rm", "-r", "--cached", "--ignore-unmatch", ".dev"], cwd=target, capture_output=True, text=True, check=False)
+        if removed.returncode:
+            raise InitializationError(removed.stderr.strip() or "could not untrack target .dev")
+
+
 def initialize(project: ProjectInput, target: Path, source: Path) -> Path:
     """Copy the local control package, render project records, and refresh navigation."""
     validate(project, target, source)
     ignore_target_control_directory(target)
     control = target / ".dev"
-    shutil.copytree(source / ".dev", control)
+    if control.exists():
+        untrack_target_control_directory(target)
+    else:
+        shutil.copytree(source / ".dev", control)
     records = project_records(project)
     project_docs = control / "docs" / "project"
     project_docs.mkdir(parents=True, exist_ok=True)
