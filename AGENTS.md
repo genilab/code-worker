@@ -1,8 +1,8 @@
 # code-worker
 
 `code-worker` is a GitHub template for evidence-driven codebase development.
-Its development-control structure stays local; it does not generate a second
-repository by default.
+Its `.dev/` directory is the versioned master control package. A target project
+receives a local, ignored `.dev/` copy through `project-planning`.
 
 ## Operating model
 

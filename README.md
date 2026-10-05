@@ -29,7 +29,7 @@ the repeatable workflow.
 
 ## How it works
 
-CodeWorker maintains a local development-control system in `.dev/`:
+CodeWorker maintains its versioned master development-control system in `.dev/`:
 
 1. **Plan from the result** — lead a brainstorming conversation with the human
    developer from final result, user/system use, and expected outputs through
@@ -68,10 +68,12 @@ then proposes a delivery structure for confirmation. Only then does it create
 the local `.dev/` control records and module requirement stubs, and generate
 `.dev/INDEX.md`. Start every later workflow from that index.
 
-`.dev/` is intentionally local to development and excluded from this GitHub
-template. The GitHub repository contains the reusable codebase baseline;
-CodeWorker's local control system contains the project's working plans,
-requirements, validation evidence, and skills.
+The `code-worker` repository publishes this `.dev/` master package so the
+planning workflow and its standards are versioned with the template. When
+CodeWorker initializes a target project, it creates that target's `.dev/`
+control records locally and adds `.dev/` to the target project's `.gitignore`.
+The target's plans, requirements, validation evidence, and skills therefore
+remain private to its development workspace.
 
 ## Example
 
