@@ -18,9 +18,10 @@ workflow invokes it.
 
 1. Define or complete the target `docs/plan.md` before authoring its instruction script, code, or test units. It must contain Summary, Description, Script Requirements, Delegation to Code, and Code Requirements; it is the source of truth.
 2. Confirm the requested action is bounded and the required role, activation, inputs, expected outcome, dependencies, and code delegation are known. An external skill must declare that action in front matter. Ask for clarification when any of these is missing.
-3. Run `code/create_skill.py` to create only the target package folders required by the plan, its pending QA record, and an index entry.
-4. Create or revise the target `SKILL.md` in the minimal format. State when to use it, what it receives, what it produces, its decision or escalation conditions, and its boundaries. Cover every Script Requirement; implement and test only the deterministic work stated in Delegation to Code and Code Requirements.
-5. Apply `document-code` and its [source-code standard](../document-code/docs/source_code_standard.md) to every target code and test file: factual header, retained license, `AI instruction:` context block, readable structure, public docstrings, and purposeful comments. Then use `validate-skill` to regenerate `docs/qa.md` from actual checks and `maintain-index` to refresh the catalog.
+3. Read the owning project plan before authoring. A skill for a development project must preserve the master-versus-target boundary; a skill for an application project must keep `.dev/` local and must not introduce publication behavior unless a separately approved, policy-aware workflow owns it.
+4. Run `code/create_skill.py` to create only the target package folders required by the plan, its pending QA record, and an index entry.
+5. Create or revise the target `SKILL.md` in the minimal format. State when to use it, what it receives, what it produces, its decision or escalation conditions, and its boundaries. Cover every Script Requirement; implement and test only the deterministic work stated in Delegation to Code and Code Requirements.
+6. Apply `document-code` and its [source-code standard](../document-code/docs/source_code_standard.md) to every target code and test file: factual header, retained license, `AI instruction:` context block, readable structure, public docstrings, and purposeful comments. Then use `validate-skill` to regenerate `docs/qa.md` from actual checks and `maintain-index` to refresh the catalog.
 
 ## Constraints
 

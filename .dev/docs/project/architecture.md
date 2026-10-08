@@ -8,11 +8,13 @@ design decisions as the project plan becomes concrete.
 `code-worker` separates a target product from the development-control system
 that governs it.
 
-The front matter in `.dev/docs/project/plan.md` declares `project_use` as `internal`
-or `external`, and supplies `project_name` and `tagline`. External projects
-must maintain their root `README.md` for users; internal projects do not
-require one. An external-project creation, conversion to external use, or
-direct README request invokes `maintain-readme`.
+The front matter in `.dev/docs/project/plan.md` declares `project_use` as
+`internal` or `external`. Its Title, Tagline, Core Proposition, and Key Ideas
+sections provide the authoritative user-facing project identity and message.
+External projects must
+maintain their root `README.md` for users; internal projects do not require one.
+An external-project creation, conversion to external use, or direct README
+request invokes `maintain-readme`.
 
 {{QUESTION: What architectural qualities matter most—such as simplicity, portability, automation, extensibility, or auditability—and why?}}
 

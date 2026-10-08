@@ -18,11 +18,12 @@ them.
 - It must show each skill, definition from its plan Summary, actual class, plan link, QA link, and separate PASSED, FAILED, or PENDING status.
 - It must separate internal and external skills in the catalog.
 - It must show the project's declared internal or external use.
+- It must derive the project's Title, Tagline, Core Proposition, and Key Ideas from the project plan and show them in the project index.
 
 ## Delegation to Code
 
 - Delegate record discovery, metadata extraction, status derivation, and Markdown index rendering to code.
-- Code must generate `.dev/INDEX.md` and `.dev/skills/INDEX.md` from project front matter, `SKILL.md` records, and actual QA evidence.
+- Code must generate `.dev/INDEX.md` and `.dev/skills/INDEX.md` from project-plan documentation and front matter, `SKILL.md` records, and actual QA evidence.
 
 ## Code Requirements
 
@@ -30,4 +31,5 @@ them.
 - It must read a skill definition from its discovery description and classify the skill from its packaged implementation.
 - It must classify skills by role and render the required catalog fields for each section.
 - It must read `project_use` from project-plan front matter and show it in the project index.
+- It must read Title, Tagline, Core Proposition, and Key Ideas from the project plan and show them in the project index.
 - It must prove that missing evidence remains PENDING and no passing status is manufactured.

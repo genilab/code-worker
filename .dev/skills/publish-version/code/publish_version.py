@@ -25,6 +25,8 @@ REMOTE_PATTERNS = (
     re.compile(r"^git@github\.com:(?P<slug>[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?)(?:\.git)?$"),
 )
 WRITE_PERMISSIONS = {"ADMIN", "MAINTAIN", "WRITE"}
+PROJECT_TYPE = re.compile(r"^project_type:\s*(?P<value>\S+)\s*$", re.MULTILINE | re.IGNORECASE)
+PUBLICATION_POLICY = re.compile(r"^publication_policy:\s*(?P<value>\S+)\s*$", re.MULTILINE | re.IGNORECASE)
 
 
 class PublicationError(RuntimeError):
@@ -60,6 +62,20 @@ def git_root(project: Path) -> Path:
     if root != resolved:
         raise PublicationError(f"{resolved} is nested inside Git repository {root}; select a standalone project root")
     return root
+
+
+def require_full_development_publication(root: Path) -> None:
+    """Allow release publication only for a declared full-publication development master."""
+    plan = root / ".dev" / "docs" / "project" / "plan.md"
+    if not plan.is_file():
+        raise PublicationError("project plan must declare development/full publication before release publication")
+    content = plan.read_text(encoding="utf-8")
+    project_type = PROJECT_TYPE.search(content)
+    policy = PUBLICATION_POLICY.search(content)
+    if not project_type or project_type.group("value").lower() != "development":
+        raise PublicationError("release publication is reserved for development projects; application projects remain local by default")
+    if not policy or policy.group("value").lower() != "full":
+        raise PublicationError("release publication requires publication_policy: full")
 
 
 def github_slug(remote_url: str) -> str | None:
@@ -126,6 +142,7 @@ def publication_commands(root: Path, tag: str, slug: str) -> list[list[str]]:
 def preflight(project: Path, level: str) -> tuple[Path, str, Version | None, str]:
     """Validate release conditions and return the exact next tag without mutation."""
     root = git_root(project)
+    require_full_development_publication(root)
     slug = origin_slug(root)
     if run(["git", "status", "--porcelain"], root):
         raise PublicationError("working tree is not clean")

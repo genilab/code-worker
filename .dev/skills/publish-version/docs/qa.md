@@ -42,6 +42,7 @@
 - It must accept `major`, `minor`, or `patch` as the version bump and default to `patch`. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must treat `vMAJOR.MINOR.PATCH` Git tags and GitHub Releases as the sole version and changelog records. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must verify a standalone Git root, matching GitHub origin, clean working tree, GitHub authentication, and write permission before publication. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
+- It must allow publication only when the project plan declares `project_type: development` and `publication_policy: full`. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must refuse to publish when no commits exist since the preceding semantic tag, the target tag already exists, or a prerequisite check fails. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must create and push one annotated semantic tag and publish one GitHub Release with generated notes. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must return the actual GitHub Release URL and retain failures without claiming publication. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
@@ -51,6 +52,7 @@
 
 - It must calculate major, minor, and patch bumps from valid semantic Git tags. — PASSED — Verified by the current code-documentation and executable-test checks.
 - It must reject invalid bump levels, nested roots, non-GitHub origins, dirty trees, existing tags, and no-change release ranges. — PASSED — Verified by the current code-documentation and executable-test checks.
+- It must reject application projects and any project without full publication. — PASSED — Verified by the current code-documentation and executable-test checks.
 - It must construct annotated-tag, tag-push, GitHub Release creation, and release-URL retrieval commands without shell interpolation. — PASSED — Verified by the current code-documentation and executable-test checks.
 - It must have executable test units for semantic version behavior, GitHub remote parsing, and publication command construction. — PASSED — Verified by the current code-documentation and executable-test checks.
 

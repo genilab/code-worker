@@ -33,7 +33,10 @@ SHORT_DESCRIPTION = re.compile(r"^## Short Description\s*$\n(?P<value>.*?)(?=^##
 DESCRIPTION = re.compile(r"^description:\s*(?P<value>.+)$", re.MULTILINE)
 SUMMARY = re.compile(r"^## Summary\s*$\n(?P<value>.*?)(?=^##\s|\Z)", re.MULTILINE | re.DOTALL)
 PROJECT_USE = re.compile(r"\A---\n.*?^project_use:\s*(internal|external)\s*$.*?\n---", re.MULTILINE | re.DOTALL | re.IGNORECASE)
+PROJECT_TYPE = re.compile(r"\A---\n.*?^project_type:\s*(development|application)\s*$.*?\n---", re.MULTILINE | re.DOTALL | re.IGNORECASE)
+PUBLICATION_POLICY = re.compile(r"\A---\n.*?^publication_policy:\s*(full|limited|private)\s*$.*?\n---", re.MULTILINE | re.DOTALL | re.IGNORECASE)
 PROJECT_VERSION = re.compile(r'^version\s*=\s*["\'](?P<value>[^"\']+)["\']\s*$', re.MULTILINE)
+PLAN_SECTION = re.compile(r"^## (?P<heading>Title|Tagline|Core Proposition|Key Ideas)\s*$\n(?P<value>.*?)(?=^##\s|\Z)", re.MULTILINE | re.DOTALL)
 
 
 def validation_status(path: Path) -> str:
@@ -47,18 +50,23 @@ def relative(base: Path, path: Path) -> str:
     return os.path.relpath(path, base).replace(os.sep, "/")
 
 
-def identity(root: Path) -> tuple[str, str, str]:
+def identity(root: Path) -> tuple[str, str, str, str]:
+    """Return project identity from the canonical project-plan documentation."""
     record = root / ".dev/docs/project/project_identity.md"
-    if not record.is_file():
-        return ("code-worker", "GitHub template for evidence-driven codebase development", "Template baseline validated; GitHub publication pending")
-    text = record.read_text(encoding="utf-8")
+    text = record.read_text(encoding="utf-8") if record.is_file() else ""
     values = {}
-    for field, value in re.findall(r"^\|\s*(Name|Purpose|Verification state)\s*\|\s*([^|]+)\|", text, re.MULTILINE):
+    for field, value in re.findall(r"^\|\s*(Name|Title|Tagline|Core Proposition|Purpose|Verification state)\s*\|\s*([^|]+)\|", text, re.MULTILINE):
         values[field] = value.strip()
-    name = values.get("Name", "code-worker")
-    purpose = values.get("Purpose", "GitHub template for evidence-driven codebase development")
+    plan = root / ".dev/docs/project/plan.md"
+    plan_values = {
+        match.group("heading"): " ".join(match.group("value").split())
+        for match in PLAN_SECTION.finditer(plan.read_text(encoding="utf-8"))
+    } if plan.is_file() else {}
+    name = plan_values.get("Title", values.get("Title", values.get("Name", "code-worker")))
+    tagline = plan_values.get("Tagline", values.get("Tagline", "PENDING"))
+    proposition = plan_values.get("Core Proposition", values.get("Core Proposition", values.get("Purpose", "PENDING")))
     state = values.get("Verification state", "PENDING")
-    return (name, purpose, f"Initialized target — {state}")
+    return (name, tagline, proposition, f"Initialized target — {state}")
 
 
 def project_use(root: Path) -> str:
@@ -68,6 +76,29 @@ def project_use(root: Path) -> str:
         return "PENDING"
     declared = PROJECT_USE.search(plan.read_text(encoding="utf-8"))
     return declared.group(1).lower() if declared else "PENDING"
+
+
+def project_configuration(root: Path) -> tuple[str, str]:
+    """Return project type and publication policy from the canonical plan."""
+    plan = root / ".dev/docs/project/plan.md"
+    if not plan.is_file():
+        return ("PENDING", "PENDING")
+    content = plan.read_text(encoding="utf-8")
+    project_type = PROJECT_TYPE.search(content)
+    publication_policy = PUBLICATION_POLICY.search(content)
+    return (
+        project_type.group(1).lower() if project_type else "PENDING",
+        publication_policy.group(1).lower() if publication_policy else "PENDING",
+    )
+
+
+def key_ideas(root: Path) -> list[str]:
+    """Return the canonical plan's non-empty Key Ideas as concise bullet text."""
+    plan = root / ".dev/docs/project/plan.md"
+    if not plan.is_file():
+        return []
+    sections = {match.group("heading"): match.group("value") for match in PLAN_SECTION.finditer(plan.read_text(encoding="utf-8"))}
+    return [line.removeprefix("- ").strip() for line in sections.get("Key Ideas", "").splitlines() if line.startswith("- ") and line[2:].strip()]
 
 
 def project_version(root: Path) -> str:
@@ -158,9 +189,11 @@ def skill_rows(root: Path, source: str) -> list[str]:
 
 
 def render(root: Path) -> str:
-    name, purpose, lifecycle = identity(root)
+    name, tagline, proposition, lifecycle = identity(root)
     use = project_use(root)
+    project_type, publication_policy = project_configuration(root)
     version = project_version(root)
+    ideas = [f"- {idea}" for idea in key_ideas(root)] or ["- PENDING"]
     return "\n".join([
         f"# {name} Index",
         "",
@@ -169,11 +202,18 @@ def render(root: Path) -> str:
         "| Field | Value |",
         "| --- | --- |",
         f"| Project | {name} |",
+        f"| Tagline | {tagline} |",
+        f"| Core proposition | {proposition} |",
         "| Template | Codebase projects |",
         f"| Current version | {version} |",
         f"| Project use | {use} |",
+        f"| Project type | {project_type} |",
+        f"| Publication policy | {publication_policy} |",
         f"| Lifecycle state | {lifecycle} |",
-        f"| Purpose | {purpose} |",
+        "",
+        "## Key ideas",
+        "",
+        *ideas,
         "",
         "## Project state",
         "",

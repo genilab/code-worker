@@ -9,10 +9,13 @@ receives a local, ignored `.dev/` copy through `project-planning`.
 1. For a new target, use `project-planning` before implementation. Then start
    at [.dev/INDEX.md](.dev/INDEX.md), and read the relevant plan, requirements,
    skill, and QA.
-2. Read `project_use` in `.dev/docs/project/plan.md`: an external project must maintain
-   its root `README.md` through `maintain-readme`; an internal project does not
-   require one. Run `maintain-readme` when an external project is created,
-   when an internal project becomes external, or on a direct README request.
+2. Read `project_type`, `publication_policy`, and `project_use` in `.dev/docs/project/plan.md`.
+   This development project is a full-published master and maintains its root `README.md`.
+   An application project keeps `.dev/` local and receives README maintenance only on a
+   direct request that is safe for its publication policy. Do not initialize a development
+   master as an application project. Treat the plan's Title, Tagline, Core Proposition, and Key Ideas as the
+   authoritative user-facing identity and message; project planning must confirm all four before
+   initialization, and the README and project index derive from them.
 3. Use the applicable Agent Skill in `.dev/skills/`. Every created or revised
    Python file must follow the `document-code`
    [source-code standard](.dev/skills/document-code/docs/source_code_standard.md):

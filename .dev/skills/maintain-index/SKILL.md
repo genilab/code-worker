@@ -17,7 +17,7 @@ invokes it.
 
 ## Workflow
 
-1. Read the relevant maintained records and confirm they identify project use, skill source, definition, class, plan, and QA status; ask for clarification when a source is missing or ambiguous.
+1. Read the relevant maintained records and confirm the project plan identifies Title, Tagline, Core Proposition, Key Ideas, and project use, while skill records identify source, definition, class, plan, and QA status; ask for clarification when a source is missing or ambiguous.
 2. Run `code/maintain_index.py --project .` to derive both indexes from those records.
 3. Check that internal and external skills are separated and each catalog row shows the skill, concise plan Summary, class, plan link, QA link, and separate actual status. External rows also show their action.
 4. Produce the refreshed indexes and report source gaps as PENDING rather than inferring a result.

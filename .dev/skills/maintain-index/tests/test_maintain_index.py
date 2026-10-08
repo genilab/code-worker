@@ -41,12 +41,34 @@ class MaintainIndexTest(unittest.TestCase):
             self.assertIn("[Skills index](skills/INDEX.md)", project_index)
             self.assertIn("[QA](qa/project/README.md)", project_index)
             self.assertIn("| Project use | PENDING |", project_index)
+            self.assertIn("| Project type | PENDING |", project_index)
+            self.assertIn("| Publication policy | PENDING |", project_index)
+            self.assertIn("| Tagline | PENDING |", project_index)
+            self.assertIn("## Key ideas\n\n- PENDING", project_index)
             self.assertIn("## Internal Skills", skills_index)
             self.assertIn("## External Skills", skills_index)
             self.assertIn("| **Skill** | **Action** | **Definition** | **Class** | **Plan** | **QA** | **Status** |", skills_index)
             self.assertIn("| [`example`](example/SKILL.md) | Run example. | Example. | prompt + code | [plan](example/docs/plan.md) | missing | PENDING |", skills_index)
             (skill / "docs/qa.md").write_text("| Validation | Status | Actual result |\n| --- | --- | --- |\n| Overall status | PASSED | Done |\n")
             self.assertIn("| [qa](example/docs/qa.md) | PASSED |", MODULE.render_skills(root))
+
+    def test_project_index_uses_canonical_plan_identity(self) -> None:
+        """Render public project identity from Title, Tagline, and Core Proposition."""
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            plan = root / ".dev/docs/project/plan.md"
+            plan.parent.mkdir(parents=True)
+            plan.write_text(
+                "---\nproject_name: demo\nproject_use: external\nproject_type: application\npublication_policy: private\n---\n\n# Project Plan\n\n## Title\n\nDemo\n\n## Tagline\n\nBuild with confidence.\n\n## Core Proposition\n\nA traceable development workflow.\n\n## Key Ideas\n\n- Keep project evidence visible.\n",
+                encoding="utf-8",
+            )
+            project_index = MODULE.render(root)
+            self.assertIn("| Project | Demo |", project_index)
+            self.assertIn("| Tagline | Build with confidence. |", project_index)
+            self.assertIn("| Core proposition | A traceable development workflow. |", project_index)
+            self.assertIn("| Project type | application |", project_index)
+            self.assertIn("| Publication policy | private |", project_index)
+            self.assertIn("- Keep project evidence visible.", project_index)
 
 
 if __name__ == "__main__":

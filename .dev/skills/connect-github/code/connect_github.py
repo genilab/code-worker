@@ -26,6 +26,8 @@ REMOTE_PATTERNS = (
     re.compile(r"^ssh://git@github\.com/(?P<slug>[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?)(?:\.git)?/?$"),
 )
 WRITE_PERMISSIONS = {"ADMIN", "MAINTAIN", "WRITE"}
+PROJECT_TYPE = re.compile(r"^project_type:\s*(?P<value>\S+)\s*$", re.MULTILINE | re.IGNORECASE)
+PUBLICATION_POLICY = re.compile(r"^publication_policy:\s*(?P<value>\S+)\s*$", re.MULTILINE | re.IGNORECASE)
 
 
 class ConnectionError(RuntimeError):
@@ -58,6 +60,20 @@ def repository_root(project: Path) -> Path:
     if root != resolved:
         raise ConnectionError(f"{resolved} is nested inside Git repository {root}; select a standalone project root")
     return root
+
+
+def require_full_development_publication(root: Path) -> None:
+    """Allow GitHub association only for a declared full-publication development master."""
+    plan = root / ".dev" / "docs" / "project" / "plan.md"
+    if not plan.is_file():
+        raise ConnectionError("project plan must declare development/full publication before GitHub association")
+    content = plan.read_text(encoding="utf-8")
+    project_type = PROJECT_TYPE.search(content)
+    policy = PUBLICATION_POLICY.search(content)
+    if not project_type or project_type.group("value").lower() != "development":
+        raise ConnectionError("GitHub association is reserved for development projects; application projects remain local by default")
+    if not policy or policy.group("value").lower() != "full":
+        raise ConnectionError("GitHub association requires publication_policy: full")
 
 
 def validate_slug(slug: str) -> str:
@@ -94,6 +110,7 @@ def verify_github_access(root: Path, slug: str) -> None:
 def build_plan(project: Path, slug: str, replace_origin: bool = False) -> ConnectionPlan:
     """Preflight one association without changing the project's Git configuration."""
     root = repository_root(project)
+    require_full_development_publication(root)
     target = validate_slug(slug)
     verify_github_access(root, target)
     remote_url = f"https://github.com/{target}.git"

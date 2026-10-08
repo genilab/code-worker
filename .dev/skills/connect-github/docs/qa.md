@@ -40,6 +40,7 @@
 ### Script Requirements
 
 - It must accept one GitHub `owner/repository` target and a project path. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
+- It must allow GitHub association only when the plan declares `project_type: development` and `publication_policy: full`. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must refuse to connect a directory that is not exactly a Git repository root. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must verify the target GitHub repository and authenticated write permission before changing `origin`. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must report an existing, different `origin` and require explicit replacement before changing it. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
@@ -50,6 +51,7 @@
 
 - It must expose a command-line preflight for a project path and GitHub `owner/repository` target. — PASSED — Verified by the current code-documentation and executable-test checks.
 - It must reject nested project paths, invalid slugs, non-GitHub remotes, and an existing different origin without explicit replacement. — PASSED — Verified by the current code-documentation and executable-test checks.
+- It must refuse application projects and projects without `publication_policy: full`. — PASSED — Verified by the current code-documentation and executable-test checks.
 - It must add or replace `origin` only when explicitly requested and must emit the verified repository slug. — PASSED — Verified by the current code-documentation and executable-test checks.
 - It must have executable test units for URL parsing, root validation, and remote-change decisions. — PASSED — Verified by the current code-documentation and executable-test checks.
 

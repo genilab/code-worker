@@ -14,6 +14,7 @@ import importlib.util
 import sys
 import unittest
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 
 CODE = Path(__file__).resolve().parents[1] / "code" / "publish_version.py"
@@ -49,6 +50,16 @@ class PublishVersionTest(unittest.TestCase):
         self.assertIn("--verify-tag", commands[2])
         self.assertIn("--generate-notes", commands[2])
         self.assertNotIn("shell", " ".join(commands[2]).lower())
+
+    def test_rejects_application_project_policy(self) -> None:
+        """Keep application targets out of the full GitHub release workflow."""
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            plan = root / ".dev/docs/project/plan.md"
+            plan.parent.mkdir(parents=True)
+            plan.write_text("---\nproject_type: application\npublication_policy: private\n---\n", encoding="utf-8")
+            with self.assertRaisesRegex(MODULE.PublicationError, "reserved for development projects"):
+                MODULE.require_full_development_publication(root)
 
 
 if __name__ == "__main__":

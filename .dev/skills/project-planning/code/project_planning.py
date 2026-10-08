@@ -28,10 +28,15 @@ class ProjectInput:
     """Describe the minimum confirmed facts required for project initialization."""
 
     name: str
+    title: str
     objective: str
     project_use: str
+    project_type: str
+    publication_policy: str
     modules: tuple[str, ...]
     tagline: str
+    core_proposition: str
+    key_ideas: tuple[str, ...]
 
 
 def default_source() -> Path:
@@ -43,8 +48,16 @@ def validate(project: ProjectInput, target: Path, source: Path) -> None:
     """Reject unsafe targets and incomplete project facts before creating files."""
     if not project.name.strip() or not project.objective.strip():
         raise InitializationError("project name and objective are required")
+    if not project.title.strip() or not project.tagline.strip() or not project.core_proposition.strip():
+        raise InitializationError("title, tagline, and core proposition are required")
+    if not project.key_ideas or any(not idea.strip() for idea in project.key_ideas):
+        raise InitializationError("at least one non-empty key idea is required")
     if project.project_use not in {"internal", "external"}:
         raise InitializationError("project use must be internal or external")
+    if project.project_type != "application":
+        raise InitializationError("project planning initializes application projects only; development projects are reusable masters")
+    if project.publication_policy not in {"private", "limited", "full"}:
+        raise InitializationError("publication policy must be private, limited, or full")
     if not project.modules or any(not module.strip() for module in project.modules):
         raise InitializationError("at least one non-empty module is required")
     if not target.is_dir():
@@ -67,9 +80,10 @@ def requirements(module: str) -> str:
 def project_records(project: ProjectInput) -> dict[str, str]:
     """Render the initial project records from confirmed facts and visible questions."""
     modules = ", ".join(project.modules)
+    key_ideas = "\n".join(f"- {idea}" for idea in project.key_ideas)
     return {
-        "project_identity.md": f"# Project Identity\n\n| Field | Value |\n| --- | --- |\n| Name | {project.name} |\n| Purpose | {project.objective} |\n| Verification state | PENDING |\n",
-        "plan.md": f"---\nproject_name: {project.name}\nproject_use: {project.project_use}\ntagline: \"{project.tagline}\"\n---\n\n# Project Plan\n\n## Overview\n\n{project.objective}\n\n## Overall Requirements\n\n- It must define and maintain explicit planning, architecture, release, roadmap, module requirements, QA, and indexes before implementation.\n- It must maintain independently owned modules: {modules}.\n- It must preserve unresolved product decisions as questions until confirmed.\n",
+        "project_identity.md": f"# Project Identity\n\n| Field | Value |\n| --- | --- |\n| Name | {project.name} |\n| Title | {project.title} |\n| Tagline | {project.tagline} |\n| Core Proposition | {project.core_proposition} |\n| Purpose | {project.objective} |\n| Project type | {project.project_type} |\n| Publication policy | {project.publication_policy} |\n| Verification state | PENDING |\n",
+        "plan.md": f"---\nproject_name: {project.name}\nproject_use: {project.project_use}\nproject_type: {project.project_type}\npublication_policy: {project.publication_policy}\n---\n\n# Project Plan\n\n## Title\n\n{project.title}\n\n## Tagline\n\n{project.tagline}\n\n## Core Proposition\n\n{project.core_proposition}\n\n## Key Ideas\n\n{key_ideas}\n\n## Overview\n\n{project.objective}\n\n## Overall Requirements\n\n- It must define and maintain explicit planning, architecture, release, roadmap, module requirements, QA, and indexes before implementation.\n- It must maintain independently owned modules: {modules}.\n- It must preserve unresolved product decisions as questions until confirmed.\n",
         "architecture.md": f"# Solution Architecture\n\n## Overview\n\n{{{{QUESTION: What components, boundaries, integrations, and data flows realize {project.objective}?}}}}\n\n## Initial Modules\n\n{modules}\n",
         "release.md": "# Next Release\n\n## Overview\n\n{{QUESTION: What smallest verified outcome belongs in the first release?}}\n\n## Overall Requirements\n\n- It must define evidence-backed scope before implementation.\n",
         "roadmap.md": "# Roadmap\n\n## Upcoming Versions\n\n{{QUESTION: What outcome belongs in each planned version after the initial release?}}\n",
@@ -129,14 +143,30 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Bootstrap a planned target with CodeWorker local development control.")
     parser.add_argument("--target", type=Path, required=True)
     parser.add_argument("--name", required=True)
+    parser.add_argument("--title", required=True)
     parser.add_argument("--result", dest="objective", required=True, help="The observable completed project result.")
     parser.add_argument("--project-use", choices=("internal", "external"), required=True)
+    parser.add_argument("--project-type", choices=("application", "development"), default="application")
+    parser.add_argument("--publication-policy", choices=("private", "limited", "full"), default="private")
     parser.add_argument("--module", action="append", default=[])
-    parser.add_argument("--tagline", default="")
+    parser.add_argument("--tagline", required=True)
+    parser.add_argument("--core-proposition", required=True)
+    parser.add_argument("--key-idea", action="append", required=True)
     parser.add_argument("--control-source", type=Path, default=default_source())
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
-    project = ProjectInput(args.name, args.objective, args.project_use, tuple(args.module), args.tagline or args.objective)
+    project = ProjectInput(
+        args.name,
+        args.title,
+        args.objective,
+        args.project_use,
+        args.project_type,
+        args.publication_policy,
+        tuple(args.module),
+        args.tagline,
+        args.core_proposition,
+        tuple(args.key_idea),
+    )
     try:
         validate(project, args.target, args.control_source)
         if not args.apply:

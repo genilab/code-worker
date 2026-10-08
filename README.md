@@ -1,82 +1,119 @@
-<h1 align="center">CodeWorker</h1>
-<h3 align="center">A normalized, evidence-driven way for AI agents to create and maintain stable codebases.</h3>
+<h1 align="center">Code-Worker</h1>
 
-## What is CodeWorker?
+<h3 align="center">A clear way to guide AI-powered software delivery with confidence.</h3>
 
-CodeWorker is a development-control system for AI-assisted codebase work. It
-provides the working structure and repeatable workflows that turn an idea into
-a controlled software-development lifecycle: project plan, explicit module
-requirements, solution architecture, implementation, executable tests,
-verification, QA evidence, documentation, releases, and derived indexes.
+<p align="center">
+  <img src="assets/images/info.png" alt="Code-Worker solution architecture: a human developer or AI-enabled CTO works with an AI coding agent through Code-Worker's plan, requirements, architecture, tests, QA, and release control layer to produce a documented, verified, releasable codebase." width="100%">
+</p>
 
-Rather than deciding how to construct that control system for every project,
-you start from a prepared baseline and focus on defining the product you need.
-CodeWorker then keeps the artifacts connected: each requirement can lead to
-implementation, test evidence, verification, and recorded QA.
+## Build with AI. Still run engineering.
 
-## Why do we have CodeWorker?
+Code-Worker applies the principles of software engineering to bring control and
+transparency to AI-driven coding processes. It gives a human developer and an
+AI coding agent a shared, repeatable way to turn an intended result into a
+planned, tested, documented, and releasable codebase.
 
-AI coding tools can generate useful code quickly, but code generation alone
-does not make the engineering process visible or controllable. Without explicit
-plans, requirements, architecture, QA, documentation, and release evidence,
-it is difficult to understand scope, verify outcomes, manage change, or control
-the cost of maintenance.
+It is not another coding agent, and it does not replace Codex or Claude Code.
+Those tools are excellent at helping create and change code. Code-Worker is the
+development-control layer around that work: the place where the team makes the
+scope, decisions, requirements, evidence, and release state explicit.
 
-CodeWorker makes those control points explicit. It applies software-development
-lifecycle discipline to AI-assisted work so that people define what must be
-built, inspect the evidence, and make informed decisions while agents handle
-the repeatable workflow.
+## Why it exists
 
-## How it works
+AI can produce useful code in minutes. But a growing codebase needs more than
+useful code: it needs a shared understanding of the intended result, clear
+boundaries, requirements that can be checked, test evidence, quality records,
+documentation, and a disciplined way to release changes.
 
-CodeWorker maintains its versioned master development-control system in `.dev/`:
+Without those things, the project can become a sequence of capable but opaque
+agent sessions. It is hard to answer basic CTO questions:
 
-1. **Plan from the result** — lead a brainstorming conversation with the human
-   developer from final result, user/system use, and expected outputs through
-   requirements, modules, units, and test evidence; then propose the
-   architecture, packages, releases, and roadmap for confirmation.
-2. **Plan and specify** — maintain the project plan, solution architecture,
-   release plan, roadmap, and independently testable module requirements.
-3. **Implement** — build only the approved, traceable behavior.
-4. **Verify and assure quality** — run executable tests, inspect documentation,
-   and record actual QA evidence for each module.
-5. **Document and release** — maintain user-facing documentation, publish
-   controlled versions, and preserve GitHub release notes as the changelog.
+- What are we actually building, and why?
+- Which requirement led to this implementation?
+- What changed, what was tested, and what is safe to release?
+- Where is the current source of truth when a new person or agent joins?
 
-Indexes are generated from those maintained records. They are the entry point
-for navigating the current project state, not a substitute for evidence.
+Code-Worker closes that gap. It keeps the control artifacts of the software
+development lifecycle close to the work, so speed from AI does not come at the
+cost of traceability, quality, or maintainability.
 
-## Getting started
+## The working loop
 
-Create and enter the target project directory, then clone the CodeWorker
-template:
+```text
+Desired result
+  → Plan and boundaries
+  → Requirements and modules
+  → Architecture and implementation
+  → Tests and QA evidence
+  → Documentation and release
+  → A codebase that the next human or agent can understand
+```
+
+The solution architecture above shows the same outcome-to-evidence loop:
+human judgment directs the work, an AI coding agent accelerates it, and
+Code-Worker keeps the decisions and evidence connected.
+
+## What Code-Worker gives you
+
+- A planning conversation that starts with the finished result, who will use
+  it, what it must produce, and how success will be recognized.
+- Explicit project plans, module requirements, architecture, release plans,
+  and roadmap records.
+- A way to connect a requirement to implementation, executable tests,
+  validation, and recorded QA evidence.
+- Maintained indexes so people and agents can find the current plan, evidence,
+  and next action without guessing.
+- A reusable skill structure for repeatable development workflows.
+
+The human developer still owns the product decisions. The agent asks,
+organizes, challenges ambiguity, and proposes options; it does not silently
+invent the product plan.
+
+## Get started
+
+Start a new project from a copy of this repository, then open that folder in
+your AI coding environment:
 
 ```bash
 git clone https://github.com/kochf1/code-worker.git project-x
 cd project-x
 ```
 
-With the local CodeWorker control package available to your coding agent, run:
+Start the planning conversation with:
 
 ```text
 Plan project
 ```
 
-The planning workflow starts with a developer-led conversation about the desired
-result, works backward into requirements, modules, units, and test evidence,
-then proposes a delivery structure for confirmation. Only then does it create
-the local `.dev/` control records and module requirement stubs, and generate
-`.dev/INDEX.md`. Start every later workflow from that index.
+Code-Worker will begin with the end state you want—not with a presumed package
+structure. Together, you define the outcome, users, inputs, outputs,
+constraints, and acceptance evidence. It then proposes the modules,
+architecture direction, initial release, and roadmap for you to confirm before
+implementation starts.
 
-The `code-worker` repository publishes this `.dev/` master package so the
-planning workflow and its standards are versioned with the template. When
-CodeWorker initializes a target project, it creates that target's `.dev/`
-control records locally and adds `.dev/` to the target project's `.gitignore`.
-The target's plans, requirements, validation evidence, and skills therefore
-remain private to its development workspace.
+After planning, begin each piece of work from `.dev/INDEX.md`.
+
+## How the control package works
+
+Code-Worker versions its master development-control package in `.dev/`. When
+you use it for a target project, that project's `.dev/` records remain local
+and are added to the target's `.gitignore`. This keeps planning notes,
+requirements, QA evidence, and project-specific skills in the working
+environment while Code-Worker itself remains a reusable template.
+
+## What it is not
+
+Code-Worker is not a replacement for product thinking, technical leadership,
+or engineering review. It does not claim that a passing test suite makes every
+decision correct. It provides a practical operating structure so those
+decisions, their implementation, and the evidence behind them remain visible.
 
 ## Example
 
-GraphK uses CodeWorker to establish its project plan, architecture, module
-requirements, QA evidence, and implementation workflows before extending its
-graph-execution codebase.
+GraphK is the first target application: Code-Worker is used to turn its
+graph-execution framework into explicit module requirements, implementation
+work, test evidence, QA records, and planned releases.
+
+## License
+
+See [LICENSE](LICENSE).

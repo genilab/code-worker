@@ -39,20 +39,22 @@
 
 ### Script Requirements
 
-- It must begin by defining the final result, how a human or system uses it, expected outputs, and observable success. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
+- It must begin by defining the final result, how a human or system uses it, expected outputs, observable success, Title, Tagline, Core Proposition, and one or more Key Ideas. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must lead a human-developer conversation from final result to explicit actions, inputs, outputs, boundaries, constraints, quality expectations, and independently owned modules. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must progress from modules to the units of work and test evidence each module needs before operational work begins. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must propose package structure, module boundaries, architecture direction, initial release, and roadmap while incorporating user-provided preferences. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must obtain confirmation before creating the local control baseline and preserve unresolved decisions as questions. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
-- It must create or maintain project plan, architecture, release, roadmap, and one `{module}_reqs.md` record for every confirmed module. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
+- It must confirm that the target is an application project and record an explicit publication policy, defaulting to private. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
+- It must create or maintain a project plan with Title, Tagline, Core Proposition, and Key Ideas, plus architecture, release, roadmap, and one `{module}_reqs.md` record for every confirmed module. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must regenerate indexes and direct the user to `.dev/INDEX.md` for implementation and later QA workflows. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 - It must not implement product code, record passing QA, publish a release, or silently configure GitHub. — PASSED — Verified by the current format and documentation checks of `SKILL.md` and the managed skill package.
 
 ### Code Requirements
 
 - It must reject a missing control source, an unrelated target `.dev/`, an empty result, or no modules. — PASSED — Verified by the current code-documentation and executable-test checks.
-- It must create target project identity, plan, architecture, release, roadmap, project QA, and one requirement stub for every declared module. — PASSED — Verified by the current code-documentation and executable-test checks.
+- It must require non-empty Title, Tagline, Core Proposition, and at least one Key Idea before initialization, then create the project identity and plan, architecture, release, roadmap, project QA, and one requirement stub for every declared module. — PASSED — Verified by the current code-documentation and executable-test checks.
 - It must preserve target source code and Git configuration while adding `.dev/` to the target ignore rules and untracking a copied CodeWorker master `.dev/` package without deleting its local files. — PASSED — Verified by the current code-documentation and executable-test checks.
+- It must refuse to initialize a development project and record `project_type: application` plus the confirmed publication policy in every generated plan. — PASSED — Verified by the current code-documentation and executable-test checks.
 - It must have executable test units for input validation and generated control records. — PASSED — Verified by the current code-documentation and executable-test checks.
 
 ## Executed Test Units
