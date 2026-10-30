@@ -3,7 +3,7 @@ name: release-review
 description: Evaluate release readiness from evidence without publishing a release.
 metadata:
   source: project
-  action: Review release readiness.
+  action: Review release.
 ---
 
 # Review Release
@@ -19,6 +19,12 @@ Primary agent role: release-reviewer.
 1. Read release scope, traceability, design, test, manual-review, docs, and hygiene evidence.
 2. Mark each gate from actual evidence and retain unresolved gaps.
 3. Request human release approval or return work to the responsible role.
+
+## Implementation
+
+Run `python3 src/code_worker.py review-release --help`. The command evaluates
+module verification and documentation evidence, writes a review record, and
+never commits, pushes, tags, or publishes.
 
 ## Constraints
 

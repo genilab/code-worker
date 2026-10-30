@@ -1,6 +1,24 @@
-# Plan
+# Skill Plan — info-show
 
 ## Summary
 
-Open the main or a named local INFO document in the workspace editor without
-modifying the workspace.
+Show root information or one named information topic without modifying the
+project.
+
+## Description
+
+`Show info ALL` opens the root `INFO.md`; `Show info {topic}` resolves and
+opens a confirmed local INFO document under assets, documentation, or skills.
+
+## Script Requirements
+
+- Resolve only existing, unambiguous topics.
+- Report an unavailable topic without creating or changing records.
+
+## Delegation to Code
+
+No deterministic code is currently required.
+
+## Code Requirements
+
+N/A

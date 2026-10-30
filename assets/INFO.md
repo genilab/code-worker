@@ -2,9 +2,10 @@
 
 ## Description
 
-This area stores project-produced, non-source assets. Images and infographics
-belong in `images/`; generated or approved reports belong in `reports/`.
-Additional asset types receive purpose-named folders only when needed.
+This area stores project-produced assets and maintained project documentation.
+Images and infographics belong in `images/`; generated or approved reports
+belong in `reports/`; lifecycle documentation belongs in `docs/`. Additional
+asset types receive purpose-named folders only when needed.
 
 ## Entry Points
 
@@ -12,9 +13,11 @@ Additional asset types receive purpose-named folders only when needed.
 | --- | --- |
 | Images and infographics | [images/](images/) |
 | Reports | [reports/](reports/) |
+| Documentation | [docs/INFO.md](docs/INFO.md) |
 
 ## Public Interfaces
 
-- `Manage assets [scope]` classifies assets, records their provenance and
-  purpose, and creates factual documentation references when useful.
-  ([asset-manage](../skills/asset-manage/SKILL.md))
+- `Maintain documentation [ALL | {module}]` classifies assets, records their
+  provenance and purpose, and creates factual documentation references when
+  useful.
+  ([documentation-maintain](../skills/documentation-maintain/SKILL.md))

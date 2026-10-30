@@ -12,19 +12,27 @@ documentation, and human-approved release.
 | Entry Point | Location |
 | --- | --- |
 | Skills | [skills/INFO.md](skills/INFO.md) |
-| Documentation | [docs/INFO.md](docs/INFO.md) |
-| Knowledge | [knowledge/INFO.md](knowledge/INFO.md) |
+| Documentation | [assets/docs/INFO.md](assets/docs/INFO.md) |
 | Assets | [assets/INFO.md](assets/INFO.md) |
-| Migration evidence | [temp/migration/legacy-code-worker/INVENTORY.md](temp/migration/legacy-code-worker/INVENTORY.md) |
 
 ## Public Interfaces
 
-- `Project init {folder}` guides initialization of an independent delivery
-  project after its destination repository and control-artifact policy are
-  confirmed. ([project-init](skills/project-init/SKILL.md))
-- `Manage assets [scope]` classifies and stores project-produced assets with
-  factual provenance and documentation references. ([asset-manage](skills/asset-manage/SKILL.md))
-- `Sync documentation [scope]` refreshes local INFO navigation from maintained
-  records and current evidence. ([documentation-sync](skills/documentation-sync/SKILL.md))
-- `Review release` checks delivery evidence and prepares a release decision;
-  it does not publish. ([release-review](skills/release-review/SKILL.md))
+The local command runner is [src/code_worker.py](src/code_worker.py). Run
+`python3 src/code_worker.py --help` to see executable forms of these actions.
+
+- `Project init` guides the developer through charter, release scope, roadmap,
+  baseline structure, and approvals. ([project-init](skills/project-init/SKILL.md))
+- `Define Modules` defines the approved modules, dependencies, risks, owners,
+  and delivery gates. ([module-define](skills/module-define/SKILL.md))
+- `Define requirements {module}` creates measurable requirements and
+  acceptance criteria for one module. ([requirements-define](skills/requirements-define/SKILL.md))
+- `Develop {module}` delivers one approved module incrementally through its
+  bounded work items. ([module-develop](skills/module-develop/SKILL.md))
+- `Verify {module}` records automated, integration, edge-case, and applicable
+  manual verification evidence. ([module-verify](skills/module-verify/SKILL.md))
+- `Maintain documentation [ALL | {module}]` refreshes factual documentation,
+  assets, and INFO navigation from current evidence. ([documentation-maintain](skills/documentation-maintain/SKILL.md))
+- `Review release` checks readiness evidence and requests a human decision; it
+  does not publish. ([release-review](skills/release-review/SKILL.md))
+- `Show info [ALL | {topic}]` opens the selected existing INFO document
+  without changing the project. ([info-show](skills/info-show/SKILL.md))

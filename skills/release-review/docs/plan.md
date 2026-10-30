@@ -6,7 +6,7 @@ Evaluate release readiness without committing, pushing, tagging, or publishing.
 
 ## Description
 
-The workflow checks requirements, design, tests, manual verification, docs,
+The workflow checks requirements, design, tests, manual verification, `assets/docs/`,
 limitations, hygiene, and explicit human approval.
 
 ## Script Requirements

@@ -12,7 +12,7 @@ charter, release, roadmap, and artifact-policy decisions are confirmed.
 ## Script Requirements
 
 - Reject the Code-worker master and an origin that points back to it.
-- Create `src/`, `tests/`, `docs/`, `skills/`, `assets/images/`, and `assets/reports/`.
+- Create `src/`, `tests/`, `assets/docs/`, `skills/`, `assets/images/`, and `assets/reports/`.
 
 ## Delegation to Code
 

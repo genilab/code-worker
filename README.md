@@ -1,120 +1,167 @@
-<h1 align="center">Code-worker</h1>
+# Code-worker
 
-<p align="center">
-  <strong>Controlled, evidence-driven software delivery for AI-enabled teams.</strong>
-</p>
+> A graph-orchestrated, evidence-driven framework for agent-oriented software
+> delivery.
 
-<p align="center">
-  <img src="assets/images/code-worker-controlled-delivery.png" alt="A controlled software-delivery flow connects intended outcomes, bounded agent actions, human decisions, planning, requirements, design, building, validation, deployment, and evidence." width="100%">
-</p>
+![Code-worker lifecycle flow](assets/images/code-worker-default-flow.png)
 
-<p align="center">
-  <a href="https://github.com/kochf1/code-worker/releases">
-    <img src="https://img.shields.io/github/v/release/kochf1/code-worker?display_name=tag&sort=semver&style=flat-square" alt="Latest release">
-  </a>
-  <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
-  </a>
-  <a href="skills/INFO.md">
-    <img src="https://img.shields.io/badge/Skills-23-0F766E?style=flat-square&logo=probot&logoColor=white" alt="23 managed skills">
-  </a>
-</p>
+[![Latest release](https://img.shields.io/github/v/release/genilab/code-worker?display_name=tag&sort=semver&style=flat-square)](https://github.com/genilab/code-worker/releases)
+[![Python](https://img.shields.io/badge/Python-3-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Skills](https://img.shields.io/badge/Skills-8-0F766E?style=flat-square&logo=probot&logoColor=white)](skills/INFO.md)
 
-## What is Code-worker?
+## What it does
 
-Code-worker is a reusable foundation for teams that want to build software with
-AI while keeping the work clear, reviewable, and connected to the intended
-outcome. It gives a developer, CTO, or delivery team an organized way to move
-from a project purpose through requirements, design, implementation,
-verification, documentation, and release review.
+Code-worker is a reusable template for developers who want agents to help
+deliver software without losing human control. It records a traceable path from
+purpose through requirements, implementation, verification, documentation, and
+release review:
 
-Its multi-agent structure maintains that delivery flow by routing work through
-specialized roles and reusable skills. The structure keeps decisions,
-requirements, source changes, test evidence, and documentation connected, then
-returns important tradeoffs, experience review, and release approval to a
-human decision-maker.
+```text
+purpose -> requirement -> design -> implementation -> verification -> documentation
+```
 
-### What makes it different?
+The local runner implements eight public actions. It creates and updates only
+local lifecycle records; it never commits, pushes, tags, changes a remote, or
+publishes a release.
 
-- **Outcome-to-evidence delivery.** Each requirement connects the intended
-  result to design, implementation, verification, and supporting records.
-- **Human decision gates.** The developer retains approval for scope, design,
-  meaningful tradeoffs, experience acceptance, publication, and release.
-- **Structured multi-agent work.** An orchestrator routes work to focused
-  roles for requirements, architecture, implementation, testing,
-  documentation, and release review.
+## Current status
 
-## Getting started
+- Eight public workflow actions are implemented and QA-validated.
+- The standard-library integration suite has six passing tests.
+- The framework still needs a real delivery-project pilot and human-approved
+  release review before it can be considered release-ready.
 
-Create an independent delivery repository from the Code-worker GitHub template,
-then clone that repository into the destination folder where you want to build
-your software. The cloned folder becomes your delivery workspace.
+See [implementation status](assets/docs/project/implementation_status.md) and
+[reboot QA](assets/docs/qa/reboot_qa.md) for the evidence record.
+
+## Start a delivery project
+
+Use Code-worker as a GitHub template to create a new, independent destination
+repository. Clone that destination repository—not the Code-worker master—into
+the folder where you will build the product.
 
 ```sh
 git clone https://github.com/{your-account}/{your-delivery-project}.git /path/to/your-delivery-project
 cd /path/to/your-delivery-project
+python3 src/code_worker.py --help
 ```
 
-With the delivery workspace installed, you can begin structuring the work:
+Initialize the project with its explicit controls:
 
-- Initialize the project: `Project init {folder}`.
-- Define its purpose: `Create or revise charter`.
-- Plan the work: `Plan delivery`.
-- Define the first module: `Define requirements {module}`.
+```sh
+python3 src/code_worker.py project-init \
+  --project . \
+  --name "My Project" \
+  --release "0.1.0" \
+  --roadmap "Next release to be defined" \
+  --visibility private \
+  --artifact-policy tracked
+```
 
-## Available actions
+`project-init` refuses the Code-worker master repository and an origin pointing
+back to it. It creates only missing baseline files and does not alter Git
+tracking, so it is safe to rerun with the same controls.
 
-- `Project init {folder}` — initializes an independent delivery project from
-  its charter through its initial structure and current-release scope.
-- `Create or revise charter` — establishes the human-approved project purpose,
-  users, boundaries, and success criteria.
-- `Plan delivery` — turns the charter into a current-release scope, roadmap,
-  modules, and delivery plan.
-- `Define requirements {module}` — defines measurable requirements and
-  acceptance criteria for one module.
-- `Design {module}` — records the user flow, architecture, interfaces, and
-  tradeoffs for an approved module.
-- `Implement {work item}` — builds one approved requirement slice.
-- `Verify {module}` — records actual automated verification evidence.
-- `Review experience {journey}` — records manual or visual verification of a
-  user journey.
-- `Maintain documentation` or `Sync documentation [scope]` — updates verified
-  records and their INFO navigation.
-- `Review release` — checks traceability, verification, documentation, and
-  release readiness without publishing.
+## Public workflow
 
-## Examples
+| Action | Command | Result |
+| --- | --- | --- |
+| `Project init` | `project-init` | Establishes an independent project baseline and control records. |
+| `Define Modules` | `define-modules` | Records modules, dependencies, risks, owner, and delivery plan. |
+| `Define requirements {module}` | `define-requirements` | Records a testable requirement and acceptance criterion. |
+| `Develop {module}` | `develop` | Records existing source and test evidence for an approved module. |
+| `Verify {module}` | `verify` | Runs an explicit check and stores its actual output and result. |
+| `Maintain documentation [ALL \| {module}]` | `maintain-documentation` | Audits local documentation links and records the result. |
+| `Review release` | `review-release` | Evaluates evidence and records readiness; never publishes. |
+| `Show info [ALL \| {topic}]` | `show-info` | Displays an existing INFO document without changing the project. |
 
-### Academic research portal
+Use `python3 src/code_worker.py <command> --help` for every command's required
+arguments. The workflow contracts are catalogued in [skills/INFO.md](skills/INFO.md).
 
-Imagine you need to build a portal that helps a research group organize and
-share a literature corpus. You can use Code-worker to define the intended
-experience before implementation. Proceed as follows:
+## Minimal end-to-end example
 
-- Establish the portal purpose: `Create or revise charter`.
-- Plan the first delivery: `Plan delivery`.
-- Define the library-search module: `Define requirements literature search`.
-- Design the search experience: `Design literature search`.
+```sh
+python3 src/code_worker.py define-modules \
+  --project . --module catalog --goal "Expose the product catalog"
 
-### Office approval workflow
+python3 src/code_worker.py define-requirements \
+  --project . --module catalog --id CAT-1 \
+  --description "Return the product catalog" \
+  --acceptance "A caller receives one or more product records"
 
-Imagine you need to build an internal tool for submitting and approving office
-requests. You can use Code-worker to preserve the approval rules and evidence
-for each delivery step. Proceed as follows:
+# Implement source and tests yourself in src/ and tests/.
+python3 src/code_worker.py develop \
+  --project . --module catalog \
+  --implementation src/catalog.py \
+  --test tests/test_catalog.py
 
-- Establish the workflow purpose: `Create or revise charter`.
-- Define the approval module: `Define requirements request approval`.
-- Design its roles and decisions: `Design request approval`.
-- Build and verify the approved work item: `Implement {work item}`, then
-  `Verify request approval`.
+python3 src/code_worker.py verify \
+  --project . --module catalog \
+  --check python3 -m unittest discover -s tests -v
 
-### Product release preparation
+python3 src/code_worker.py maintain-documentation --project . --scope catalog
+python3 src/code_worker.py review-release --project . --release 0.1.0
+```
 
-Imagine you need to prepare a completed feature for a human release decision.
-You can use Code-worker to bring its evidence and documentation together.
-Proceed as follows:
+A failing verification command remains visible as `FAILED`; it cannot become a
+pass by documentation update. A release becomes only `READY_FOR_HUMAN_APPROVAL`
+until a developer explicitly records the human decision.
 
-- Verify the completed module: `Verify {module}`.
-- Review the customer journey: `Review experience {journey}`.
-- Refresh verified records: `Maintain documentation`.
-- Prepare the decision evidence: `Review release`.
+## Delivery-project structure
+
+```text
+{project-folder}/
+├── src/                         # product source
+├── tests/                       # executable tests
+├── skills/                      # project-local skills
+├── assets/
+│   ├── images/                  # infographics and project images
+│   ├── reports/                 # generated audits and reports
+│   └── docs/                    # all maintained project documentation
+│       ├── plan/
+│       ├── requirements/
+│       ├── qa/
+│       └── release/
+├── AGENTS.md
+├── INFO.md
+└── README.md
+```
+
+Project assets belong beneath `assets/`. Documentation belongs beneath
+`assets/docs/`; `assets/images/` is the required location for infographics.
+Local `INFO.md` files are the navigation standard.
+
+## Guardrails
+
+- Humans approve scope, design, consequential tradeoffs, manual acceptance,
+  external publication, and release.
+- Verification runs the command supplied by the developer without a shell and
+  preserves its real exit code and output.
+- Release review evaluates evidence but never commits, pushes, tags, or
+  publishes.
+- The active project must be independent of Code-worker; delivery work never
+  commits back to this template repository.
+
+## Development and QA
+
+Run the framework's own tests from this repository:
+
+```sh
+python3 -m unittest discover -s tests -v
+```
+
+The suite covers project initialization, module and requirement definition,
+development evidence prerequisites, verification pass/fail handling,
+documentation auditing, release-review states, and the command-line dispatcher.
+
+## Navigation
+
+- [Project information](INFO.md)
+- [Skill catalogue](skills/INFO.md)
+- [Documentation records](assets/docs/INFO.md)
+- [Asset guidance](assets/INFO.md)
+- [Operating rules](AGENTS.md)
+
+## License
+
+See [LICENSE](LICENSE).

@@ -11,7 +11,7 @@ release.
 - Start at [INFO.md](INFO.md).
 - Read an invoked local skill completely before using or changing it.
 - Use [skills/INFO.md](skills/INFO.md) as the local skill catalogue.
-- Use local `INFO.md` files under `docs/` to navigate confirmed project
+- Use local `INFO.md` files under `assets/docs/` to navigate confirmed project
   records; `INFO.md`, not `INDEX.md`, is the default navigation convention.
 - Keep migration evidence and retired packages only under `temp/`.
 
@@ -31,14 +31,14 @@ evidence; they do not invent approval.
 Code-worker is the source template, not the repository for a delivery
 project's code or releases. A developer creates an independent destination
 repository from the Code-worker template, clones that repository into a chosen
-folder, and runs `Project init {folder}` there. A delivery project must not
+folder, and runs `Project init` there. A delivery project must not
 retain Code-worker as its destination `origin`, and it never commits or pushes
 work back to Code-worker.
 
 `Project init` confirms the project identity, charter, destination repository,
 visibility, current-release scope, roadmap, modules, and control-artifact
 policy before implementation. The developer explicitly chooses whether that
-project's `docs/` and `skills/` folders are `local` or `tracked` in the
+project's `assets/docs/` and `skills/` folders are `local` or `tracked` in the
 destination repository. In `local` mode, their files remain on the developer's
 machine and are removed from Git tracking without deletion; in `tracked` mode,
 they are versioned only with that delivery project.
@@ -58,7 +58,7 @@ Each initialized delivery project uses this baseline:
 │   ├── images/
 │   ├── reports/
 │   └── {other-asset-type}/
-├── docs/                        # all maintained project documentation
+├── assets/docs/                 # all maintained project documentation
 │   ├── INFO.md
 │   ├── plan/
 │   ├── requirements/
@@ -106,25 +106,31 @@ are already running.
 
 ## Public actions and workflows
 
-- `Project init {folder}` guides and validates a new delivery project from its
-  charter through current-release scope, roadmap, modules, design baseline,
-  and folder structure. It does not publish or implement product behavior.
-- `Create or revise charter`, `Plan delivery`, `Define requirements {module}`,
-  and `Design {module}` establish human-approved scope and design before a
-  work item may be implemented.
-- `Implement {work item}` builds one approved requirement slice. `Verify
-  {module}` records actual automated evidence, and `Review experience
-  {journey}` records manual or visual verification. Implementation does not
-  self-certify.
-- `Manage assets [scope]` will classify and store a project-produced asset,
-  record its provenance and purpose, and update factual documentation
-  references when appropriate.
-- `Maintain documentation` and `Sync documentation [scope]` update verified
-  records and their INFO navigation. Sync is not a Git operation and never
-  manufactures QA evidence.
-- `Review release` checks traceability, design alignment, automated and manual
-  verification, documentation, limitations, and repository hygiene. `GitHub
-  {action}` is an explicit follow-on action only after human approval.
+Use this public sequence:
+
+1. `Project init` guides the developer through the charter, current-release
+   scope, roadmap, baseline folders, and required approvals. It does not
+   publish or implement product behavior.
+2. `Define Modules` creates the delivery plan: modules, dependencies, risks,
+   owners, design work, tests, and gates.
+3. `Define requirements {module}` establishes measurable behavior and
+   acceptance criteria for one selected module.
+4. `Develop {module}` delivers that module in small approved work items,
+   including source and tests. It does not self-certify QA.
+5. `Verify {module}` records actual automated, integration, edge-case, and
+   applicable manual verification evidence.
+6. `Maintain documentation [ALL | {module}]` refreshes factual lifecycle
+   records, supporting assets, and INFO navigation. It is not a Git operation
+   and does not manufacture evidence.
+7. `Review release` checks traceability, design alignment, verification,
+   documentation, limitations, and repository hygiene for human acceptance.
+8. `Show info [ALL | {topic}]` opens root or selected existing INFO navigation
+   without changing the project.
+
+Charter creation, design-package work, test planning, manual review, asset
+management, reflection, and GitHub operations are supporting skill workflows
+within this sequence, not separate public actions. GitHub work remains an
+explicit post-approval operation for the confirmed destination repository.
 
 Every public action routes through the orchestrator. A missing, failed, or
 unapproved gate returns work to the responsible role rather than allowing the
@@ -133,7 +139,8 @@ next module or release to proceed.
 ## Asset management
 
 - Store every project-produced non-source asset under `assets/`; do not place
-  generated images, reports, or other assets in `src/`, `tests/`, or `docs/`.
+  generated images, reports, or other assets in `src/`, `tests/`, or outside
+  the appropriate `assets/` subfolder.
 - `assets/images/` contains approved images and infographics. Store every
   infographic there before referencing it from project documentation.
 - `assets/reports/` contains generated or approved project reports. Create a
@@ -143,9 +150,9 @@ next module or release to proceed.
   provenance, and relationship to a verified project record. Use a factual
   caption or reference when documentation needs it; do not treat an image or
   report as proof of an unsupported product or QA claim.
-- The planned `asset-manage` skill, owned by the documentation role, performs
-  this classification and storage workflow. It escalates unclear, unverified,
-  externally sourced, or publication-sensitive assets.
+- `Maintain documentation [ALL | {module}]`, owned by the documentation role,
+  performs this classification and storage workflow. It escalates unclear,
+  unverified, externally sourced, or publication-sensitive assets.
 - Asset storage does not itself publish an asset, modify a release, or mark a
   requirement as verified.
 
@@ -156,7 +163,7 @@ next module or release to proceed.
   coverage before implementation begins.
 - Develop one requirement at a time: confirm acceptance and edge cases -> make
   the smallest `src/` change -> add or update `tests/` -> run relevant checks
-  -> record QA in `docs/qa/` -> update affected documentation and INFO files.
+  -> record QA in `assets/docs/qa/` -> update affected documentation and INFO files.
 - The current release contains only the requirements approved for current
   implementation. Put deferred work in the roadmap under its intended future
   release.
@@ -169,8 +176,8 @@ next module or release to proceed.
 
 ## Reboot transition
 
-The current Code-worker contents are being reconciled to this model. Legacy
-skills and workflows are retained under `temp/migration/` before replacement.
-They are migration evidence, not active guidance. An imported or rewritten
-skill starts `PENDING` and requires fresh validation; historic passed records
-do not transfer automatically.
+The eight active actions are implemented and covered by the local integration
+suite. Legacy skills and workflows remain under `temp/migration/` as local
+migration evidence, not active guidance. A delivery-project pilot is still
+required before a release decision; historical passed records do not transfer
+automatically.
