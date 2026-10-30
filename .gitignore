@@ -3,3 +3,9 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+
+# Local operating and migration material
+temp/
+
+# Finder metadata
+.DS_Store

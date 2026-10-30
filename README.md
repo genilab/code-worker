@@ -1,119 +1,120 @@
-<h1 align="center">Code-Worker</h1>
-
-<h3 align="center">A clear way to guide AI-powered software delivery with confidence.</h3>
+<h1 align="center">Code-worker</h1>
 
 <p align="center">
-  <img src="assets/images/info.png" alt="Code-Worker solution architecture: a human developer or AI-enabled CTO works with an AI coding agent through Code-Worker's plan, requirements, architecture, tests, QA, and release control layer to produce a documented, verified, releasable codebase." width="100%">
+  <strong>Controlled, evidence-driven software delivery for AI-enabled teams.</strong>
 </p>
 
-## Build with AI. Still run engineering.
+<p align="center">
+  <img src="assets/images/code-worker-controlled-delivery.png" alt="A controlled software-delivery flow connects intended outcomes, bounded agent actions, human decisions, planning, requirements, design, building, validation, deployment, and evidence." width="100%">
+</p>
 
-Code-Worker applies the principles of software engineering to bring control and
-transparency to AI-driven coding processes. It gives a human developer and an
-AI coding agent a shared, repeatable way to turn an intended result into a
-planned, tested, documented, and releasable codebase.
+<p align="center">
+  <a href="https://github.com/kochf1/code-worker/releases">
+    <img src="https://img.shields.io/github/v/release/kochf1/code-worker?display_name=tag&sort=semver&style=flat-square" alt="Latest release">
+  </a>
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
+  </a>
+  <a href="skills/INFO.md">
+    <img src="https://img.shields.io/badge/Skills-23-0F766E?style=flat-square&logo=probot&logoColor=white" alt="23 managed skills">
+  </a>
+</p>
 
-It is not another coding agent, and it does not replace Codex or Claude Code.
-Those tools are excellent at helping create and change code. Code-Worker is the
-development-control layer around that work: the place where the team makes the
-scope, decisions, requirements, evidence, and release state explicit.
+## What is Code-worker?
 
-## Why it exists
+Code-worker is a reusable foundation for teams that want to build software with
+AI while keeping the work clear, reviewable, and connected to the intended
+outcome. It gives a developer, CTO, or delivery team an organized way to move
+from a project purpose through requirements, design, implementation,
+verification, documentation, and release review.
 
-AI can produce useful code in minutes. But a growing codebase needs more than
-useful code: it needs a shared understanding of the intended result, clear
-boundaries, requirements that can be checked, test evidence, quality records,
-documentation, and a disciplined way to release changes.
+Its multi-agent structure maintains that delivery flow by routing work through
+specialized roles and reusable skills. The structure keeps decisions,
+requirements, source changes, test evidence, and documentation connected, then
+returns important tradeoffs, experience review, and release approval to a
+human decision-maker.
 
-Without those things, the project can become a sequence of capable but opaque
-agent sessions. It is hard to answer basic CTO questions:
+### What makes it different?
 
-- What are we actually building, and why?
-- Which requirement led to this implementation?
-- What changed, what was tested, and what is safe to release?
-- Where is the current source of truth when a new person or agent joins?
+- **Outcome-to-evidence delivery.** Each requirement connects the intended
+  result to design, implementation, verification, and supporting records.
+- **Human decision gates.** The developer retains approval for scope, design,
+  meaningful tradeoffs, experience acceptance, publication, and release.
+- **Structured multi-agent work.** An orchestrator routes work to focused
+  roles for requirements, architecture, implementation, testing,
+  documentation, and release review.
 
-Code-Worker closes that gap. It keeps the control artifacts of the software
-development lifecycle close to the work, so speed from AI does not come at the
-cost of traceability, quality, or maintainability.
+## Getting started
 
-## The working loop
+Create an independent delivery repository from the Code-worker GitHub template,
+then clone that repository into the destination folder where you want to build
+your software. The cloned folder becomes your delivery workspace.
 
-```text
-Desired result
-  → Plan and boundaries
-  → Requirements and modules
-  → Architecture and implementation
-  → Tests and QA evidence
-  → Documentation and release
-  → A codebase that the next human or agent can understand
+```sh
+git clone https://github.com/{your-account}/{your-delivery-project}.git /path/to/your-delivery-project
+cd /path/to/your-delivery-project
 ```
 
-The solution architecture above shows the same outcome-to-evidence loop:
-human judgment directs the work, an AI coding agent accelerates it, and
-Code-Worker keeps the decisions and evidence connected.
+With the delivery workspace installed, you can begin structuring the work:
 
-## What Code-Worker gives you
+- Initialize the project: `Project init {folder}`.
+- Define its purpose: `Create or revise charter`.
+- Plan the work: `Plan delivery`.
+- Define the first module: `Define requirements {module}`.
 
-- A planning conversation that starts with the finished result, who will use
-  it, what it must produce, and how success will be recognized.
-- Explicit project plans, module requirements, architecture, release plans,
-  and roadmap records.
-- A way to connect a requirement to implementation, executable tests,
-  validation, and recorded QA evidence.
-- Maintained indexes so people and agents can find the current plan, evidence,
-  and next action without guessing.
-- A reusable skill structure for repeatable development workflows.
+## Available actions
 
-The human developer still owns the product decisions. The agent asks,
-organizes, challenges ambiguity, and proposes options; it does not silently
-invent the product plan.
+- `Project init {folder}` — initializes an independent delivery project from
+  its charter through its initial structure and current-release scope.
+- `Create or revise charter` — establishes the human-approved project purpose,
+  users, boundaries, and success criteria.
+- `Plan delivery` — turns the charter into a current-release scope, roadmap,
+  modules, and delivery plan.
+- `Define requirements {module}` — defines measurable requirements and
+  acceptance criteria for one module.
+- `Design {module}` — records the user flow, architecture, interfaces, and
+  tradeoffs for an approved module.
+- `Implement {work item}` — builds one approved requirement slice.
+- `Verify {module}` — records actual automated verification evidence.
+- `Review experience {journey}` — records manual or visual verification of a
+  user journey.
+- `Maintain documentation` or `Sync documentation [scope]` — updates verified
+  records and their INFO navigation.
+- `Review release` — checks traceability, verification, documentation, and
+  release readiness without publishing.
 
-## Get started
+## Examples
 
-Start a new project from a copy of this repository, then open that folder in
-your AI coding environment:
+### Academic research portal
 
-```bash
-git clone https://github.com/kochf1/code-worker.git project-x
-cd project-x
-```
+Imagine you need to build a portal that helps a research group organize and
+share a literature corpus. You can use Code-worker to define the intended
+experience before implementation. Proceed as follows:
 
-Start the planning conversation with:
+- Establish the portal purpose: `Create or revise charter`.
+- Plan the first delivery: `Plan delivery`.
+- Define the library-search module: `Define requirements literature search`.
+- Design the search experience: `Design literature search`.
 
-```text
-Plan project
-```
+### Office approval workflow
 
-Code-Worker will begin with the end state you want—not with a presumed package
-structure. Together, you define the outcome, users, inputs, outputs,
-constraints, and acceptance evidence. It then proposes the modules,
-architecture direction, initial release, and roadmap for you to confirm before
-implementation starts.
+Imagine you need to build an internal tool for submitting and approving office
+requests. You can use Code-worker to preserve the approval rules and evidence
+for each delivery step. Proceed as follows:
 
-After planning, begin each piece of work from `.dev/INDEX.md`.
+- Establish the workflow purpose: `Create or revise charter`.
+- Define the approval module: `Define requirements request approval`.
+- Design its roles and decisions: `Design request approval`.
+- Build and verify the approved work item: `Implement {work item}`, then
+  `Verify request approval`.
 
-## How the control package works
+### Product release preparation
 
-Code-Worker versions its master development-control package in `.dev/`. When
-you use it for a target project, that project's `.dev/` records remain local
-and are added to the target's `.gitignore`. This keeps planning notes,
-requirements, QA evidence, and project-specific skills in the working
-environment while Code-Worker itself remains a reusable template.
+Imagine you need to prepare a completed feature for a human release decision.
+You can use Code-worker to bring its evidence and documentation together.
+Proceed as follows:
 
-## What it is not
-
-Code-Worker is not a replacement for product thinking, technical leadership,
-or engineering review. It does not claim that a passing test suite makes every
-decision correct. It provides a practical operating structure so those
-decisions, their implementation, and the evidence behind them remain visible.
-
-## Example
-
-GraphK is the first target application: Code-Worker is used to turn its
-graph-execution framework into explicit module requirements, implementation
-work, test evidence, QA records, and planned releases.
-
-## License
-
-See [LICENSE](LICENSE).
+- Verify the completed module: `Verify {module}`.
+- Review the customer journey: `Review experience {journey}`.
+- Refresh verified records: `Maintain documentation`.
+- Prepare the decision evidence: `Review release`.
